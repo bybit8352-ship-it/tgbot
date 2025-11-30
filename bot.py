@@ -29,6 +29,11 @@ from io import BytesIO
 # ==================== АВТОЗАГРУЗКА ШРИФТА И ГЕРБА ====================
 FONT_PATH = Path("DejaVuSans.ttf")
 GERB_PATH = Path("gerb.png")
+PORT = int(os.environ.get("PORT", 4000))
+
+if __name__ == '__main__':
+    # Укажите порт при запуске
+    dp.start_polling(bot, skip_updates=True, on_startup=on_startup, port=PORT)
 
 if not FONT_PATH.exists():
     print("Скачиваем шрифт...")
