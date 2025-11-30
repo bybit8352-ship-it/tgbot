@@ -24,6 +24,21 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from io import BytesIO
 
+@app.route('/')
+def health_check():
+    return "Bot is running"
+
+
+if __name__ == "__main__":
+    # Запускаем бота в отдельном потоке
+    bot_thread = threading.Thread(target=lambda: asyncio.run(run_bot()))
+    bot_thread.daemon = True
+    bot_thread.start()
+    
+    # Запускаем Flask на порту из переменной PORT (Render задаёт её автоматически)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+
+
 # ==================== АВТОЗАГРУЗКА ШРИФТА И ГЕРБА ====================
 FONT_PATH = Path("DejaVuSans.ttf")
 GERB_PATH = Path("gerb.png")
