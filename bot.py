@@ -29,11 +29,8 @@ from io import BytesIO
 # ==================== АВТОЗАГРУЗКА ШРИФТА И ГЕРБА ====================
 FONT_PATH = Path("DejaVuSans.ttf")
 GERB_PATH = Path("gerb.png")
-PORT = int(os.environ.get("PORT", 4000))
+PORT = int(os.environ.get("PORT", 5000))
 
-if __name__ == '__main__':
-    # Укажите порт при запуске
-    dp.start_polling(bot, skip_updates=True, on_startup=on_startup, port=PORT)
 
 if not FONT_PATH.exists():
     print("Скачиваем шрифт...")
@@ -535,7 +532,17 @@ async def cancel(message: Message, state: FSMContext):
     await state.clear()
     await message.answer("Отменено.", reply_markup=ReplyKeyboardRemove())
 
-
+if __name__ == '__main__':
+    # Указываем порт при запуске
+    from aiogram import executor
+    executor.start_webhook(
+        dispatcher=dp,
+        webhook_path="/",
+        skip_updates=True,
+        on_startup=on_startup,
+        port=PORT
+    )
+    
 async def main():
     print("Бот УДП полностью готов и запущен!")
     await dp.start_polling(bot)
