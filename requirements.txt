@@ -1,3 +1,5 @@
 aiogram[fast]==3.13.1
 reportlab==4.2.2
 flask==3.0.3
+python-dotenv
+Pillow
