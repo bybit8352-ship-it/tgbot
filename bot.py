@@ -16,6 +16,7 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from aiohttp import web
 
 # PDF + герб + шрифт
 from reportlab.lib.pagesizes import A4
@@ -532,16 +533,12 @@ async def cancel(message: Message, state: FSMContext):
     await state.clear()
     await message.answer("Отменено.", reply_markup=ReplyKeyboardRemove())
 
-if __name__ == '__main__':
-    # Указываем порт при запуске
-    from aiogram import executor
-    executor.start_webhook(
-        dispatcher=dp,
-        webhook_path="/",
-        skip_updates=True,
-        on_startup=on_startup,
-        port=PORT
-    )
+if __name__ == "__main__":
+    logging.info("Запуск бота...")
+    try:
+        asyncio.run(dp.start_polling(bot))
+    except Exception as e:
+        logging.error(f"Ошибка при запуске: {e}")
 
 async def main():
     print("Бот УДП полностью готов и запущен!")
