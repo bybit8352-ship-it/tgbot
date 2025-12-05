@@ -542,10 +542,11 @@ if __name__ == '__main__':
         on_startup=on_startup,
         port=PORT
     )
-    
+
 async def main():
     print("Бот УДП полностью готов и запущен!")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
+
